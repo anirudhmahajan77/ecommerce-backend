@@ -1,21 +1,64 @@
 package com.ecommerce.assignment.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table
 public class Product {
     @Id
-    String uid;
+    @SequenceGenerator(
+            name = "product_sequence",
+            sequenceName = "product_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "product_sequence"
+    )
+    @Column(
+            name = "uid",
+            updatable = false
+    )
+    Long uid;
+
+    @Column(
+            name = "name",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
     String name;
-    String price;
+
+    @Column(
+            name = "price",
+            nullable = false
+    )
+    int price;
+
+    @Column(
+            name = "short_desc",
+            nullable = true,
+            columnDefinition = "TEXT"
+    )
     String shortDesc;
+
+    @Column(
+            name = "long_desc",
+            nullable = true,
+            columnDefinition = "TEXT"
+    )
     String description;
 
     public Product() {
     }
 
-    public Product(String uid, String name, String price, String shortDesc, String description) {
+    public Product(String name, int price, String shortDesc, String description) {
+        this.name = name;
+        this.price = price;
+        this.shortDesc = shortDesc;
+        this.description = description;
+    }
+
+    public Product(Long uid, String name, int price, String shortDesc, String description) {
         this.uid = uid;
         this.name = name;
         this.price = price;
@@ -23,10 +66,11 @@ public class Product {
         this.description = description;
     }
 
-    public String getUuid() {
+    public Long getUuid() {
         return uid;
     }
-    public void setUid(String uid) {
+
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 
@@ -38,11 +82,11 @@ public class Product {
         this.name = name;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

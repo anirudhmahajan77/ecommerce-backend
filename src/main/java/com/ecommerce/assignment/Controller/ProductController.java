@@ -1,6 +1,8 @@
 package com.ecommerce.assignment.Controller;
 
+import com.ecommerce.assignment.Model.Response.AllProductReponse;
 import com.ecommerce.assignment.Model.Product;
+import com.ecommerce.assignment.Model.Response.SingleProductResponse;
 import com.ecommerce.assignment.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,28 +14,28 @@ public class ProductController {
     ProductService productService;
 
     @RequestMapping("/product")
-    public String getAllProducts(){
-        return "All Products";
+    public AllProductReponse getAllProducts(){
+        return productService.getAllProducts();
     }
 
     @RequestMapping(method = RequestMethod.GET,value = "/product/{id}")
-    public String getSingleProduct(@PathVariable String id){
-        return "Product:" + id;
+    public SingleProductResponse getSingleProduct(@PathVariable Long id){
+        return productService.getSingleProducts(id);
     }
 
     @RequestMapping(method = RequestMethod.POST,value = "/product")
-    public String postProduct(@RequestBody Product product){
-        return "Product Publish";
+    public Product postProduct(@RequestBody Product product){
+        return productService.addNewProduct(product);
     }
 
     @RequestMapping(method = RequestMethod.PUT,value = "/product/{id}")
-    public String updateProduct(@PathVariable String id){
-        return "Product Update";
+    public Product updateProduct(@PathVariable Long id, @RequestBody Product product){
+        return productService.updateProduct(id,product);
     }
 
     @RequestMapping(method = RequestMethod.DELETE,value = "/product/{id}")
-    public String deleteProduct(@PathVariable String id){
-        return "Product Deleted";
+    public void deleteProduct(@PathVariable Long id){
+        productService.deleteProduct(id);
     }
 
 }
