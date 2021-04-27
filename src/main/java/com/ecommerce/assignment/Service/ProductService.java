@@ -43,4 +43,10 @@ public class ProductService {
         repository.deleteById(id);
     }
 
+    public AllProductReponse searchAll(String value){
+        List<Product> response = repository.findByName(value);
+        AllProductReponse allProduct = new AllProductReponse(response);
+        return allProduct;
+    }
+
 }
